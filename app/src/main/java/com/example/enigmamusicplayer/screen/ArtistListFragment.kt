@@ -10,19 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.enigmamusicplayer.ArtistRecycleAdapter
 import com.example.enigmamusicplayer.R
-import com.example.enigmamusicplayer.SongRecycleAdapter
-import com.example.enigmamusicplayer.view_model.SongViewModel
-import kotlinx.android.synthetic.main.fragment_song_list.*
+import com.example.enigmamusicplayer.view_model.artist.ArtistViewModel
+import kotlinx.android.synthetic.main.fragment_artist_list.*
 
 /**
  * A simple [Fragment] subclass.
- * Use the [SongListFragment.newInstance] factory method to
+ * Use the [ArtistListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class SongListFragment : Fragment(),View.OnClickListener {
+class ArtistListFragment : Fragment(),View.OnClickListener {
 
-    private val songViewModel by activityViewModels<SongViewModel>()
+    private val artistViewModel by activityViewModels<ArtistViewModel>()
+
 //    lateinit var adapter: SongRecycleAdapter
     lateinit var navController: NavController
 
@@ -36,14 +37,15 @@ class SongListFragment : Fragment(),View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_song_list, container, false)
+        return inflater.inflate(R.layout.fragment_artist_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        song_recycle_view.layoutManager = LinearLayoutManager(activity)
-        songViewModel.getSongs().observe(viewLifecycleOwner, Observer {
-            song_recycle_view.adapter = SongRecycleAdapter(it, activity)
+        artist_recycle_view.layoutManager = LinearLayoutManager(activity)
+
+        artistViewModel.allArtist().observe(viewLifecycleOwner, Observer {
+            artist_recycle_view.adapter = ArtistRecycleAdapter(it, activity)
         })
 
 //        songViewModel.songLiveData.observe(viewLifecycleOwner, Observer{

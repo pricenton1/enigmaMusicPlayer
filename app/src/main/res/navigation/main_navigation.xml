@@ -7,9 +7,9 @@
 
     <fragment
         android:id="@+id/songListFragment"
-        android:name="com.example.enigmamusicplayer.screen.SongListFragment"
+        android:name="com.example.enigmamusicplayer.screen.ArtistListFragment"
         android:label="fragment_song_list"
-        tools:layout="@layout/fragment_song_list" >
+        tools:layout="@layout/fragment_artist_list" >
         <action
             android:id="@+id/action_songListFragment_to_songDetailFragment"
             app:destination="@id/songDetailFragment"
@@ -23,12 +23,27 @@
     </fragment>
     <fragment
         android:id="@+id/songDetailFragment"
-        android:name="com.example.enigmamusicplayer.screen.SongDetailFragment"
+        android:name="com.example.enigmamusicplayer.screen.ArtistDetailFragment"
         android:label="fragment_song_detail"
-        tools:layout="@layout/fragment_song_detail" />
+        tools:layout="@layout/fragment_artist_detail" >
+        <action
+            android:id="@+id/action_songDetailFragment_to_addSongFragment2"
+            app:destination="@id/addSongFragment2" />
+    </fragment>
     <fragment
         android:id="@+id/addSongFragment"
+        android:name="com.example.enigmamusicplayer.screen.AddArtistFragment"
+        android:label="fragment_add_song"
+        tools:layout="@layout/fragment_add_artist" />
+    <fragment
+        android:id="@+id/addSongFragment2"
         android:name="com.example.enigmamusicplayer.screen.AddSongFragment"
         android:label="fragment_add_song"
-        tools:layout="@layout/fragment_add_song" />
+        tools:layout="@layout/fragment_add_song">
+        <action
+            android:id="@+id/action_addSongFragment2_pop"
+            app:popUpTo="@id/addSongFragment2"
+            app:popUpToInclusive="true" />
+
+    </fragment>
 </navigation>

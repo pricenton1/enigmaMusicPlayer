@@ -7,9 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.Navigation
 import com.example.enigmamusicplayer.R
-import com.example.enigmamusicplayer.view_model.Song
-import com.example.enigmamusicplayer.view_model.SongViewModel
+import com.example.enigmamusicplayer.room.song.Song
+import com.example.enigmamusicplayer.view_model.song.SongViewModel
 import kotlinx.android.synthetic.main.fragment_add_song.*
 
 /**
@@ -17,13 +18,12 @@ import kotlinx.android.synthetic.main.fragment_add_song.*
  * Use the [AddSongFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class AddSongFragment : Fragment(),View.OnClickListener {
+class AddSongFragment : Fragment() {
 
-    val songViewModel by activityViewModels<SongViewModel>()
+    private val songViewModel by activityViewModels<SongViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -36,15 +36,20 @@ class AddSongFragment : Fragment(),View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        save_button.setOnClickListener(this)
-    }
 
-    override fun onClick(v: View?) {
-        when(v){
-            save_button ->{
-                songViewModel.addSong(Song(input_title.text.toString(),input_name.text.toString(),input_image.text.toString()))
-                Toast.makeText(v?.context,"Song Added",Toast.LENGTH_SHORT).show()
+        val idArtist = arguments?.getInt("idArtist") ?: 0
+        save_song_button.setOnClickListener{
+            val title = input_song_title.text.toString()
+            val duration = input_duration.text.toString()
+
+            if (title == "" || duration == ""){
+                Toast.makeText(context,"Input Empty", Toast.LENGTH_SHORT).show()
+            }else{
+                songViewModel.createNewSong(Song(songName = title,songDuration = duration,songArtistId = idArtist))
+                Navigation.findNavController(view).navigate(R.id.action_addSongFragment2_pop)
+                Toast.makeText(context,"Song Added",Toast.LENGTH_SHORT).show()
             }
         }
     }
+
 }
